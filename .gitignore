@@ -1,0 +1,9 @@
+/.env
+/cache/
+/figures/
+/tables/
+/data/
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
