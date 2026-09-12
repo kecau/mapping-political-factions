@@ -197,13 +197,7 @@ of Communities in Dynamic Social Networks* (ASONAM '10):
    merge, split, continuation. An unmatched community is not declared dead
    immediately — it stays eligible for `GRACE` snapshots, so a faction that goes
    quiet for a few weeks and returns is tracked as one community rather than two.
-
-Two departures from the paper's source are worth recording. The bipartite
-polarity computation aggregates per author in SQL instead of pulling raw comment
-rows into pandas — same scores, but bounded by the number of distinct authors
-rather than the number of comments. And the political-event markers are clipped
-to each figure's data range, so a replication over a shorter window does not
-stretch its x-axis out to the last event in the list.
+   
 
 ## Citation
 
