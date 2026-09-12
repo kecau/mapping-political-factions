@@ -38,13 +38,7 @@ pip install -r requirements.txt
 `kiwipiepy` downloads its Korean language model on first use, so the first topic
 run needs network access.
 
-**2. Korean font.** Channel titles and topic keywords are Korean. Matplotlib
-ships no CJK font, so install one if your system has none — AppleGothic (macOS)
-and Malgun Gothic (Windows) are present by default; on Linux install
-`fonts-nanum` or Noto Sans CJK KR. `style.apply_style()` picks the first
-available and warns if it finds none (labels would otherwise render as boxes).
-
-**3. Database credentials:**
+**2. Database credentials:**
 
 ```bash
 cp .env.example .env   # then fill in DB_HOST / DB_USER / DB_PASSWORD / DB_NAME
@@ -81,18 +75,13 @@ python -m scripts.run_all_figures                  # all of it
 python -m scripts.run_all_figures --skip-topics    # without the LDA stage
 ```
 
-Figures land in `figures/` (PNG at 200 dpi plus PDF), result tables in
-`tables/`. Both paths are configurable via `MPF_FIGURES` / `MPF_TABLES`.
-
 The first run streams the whole comment history into a Parquet cache under
 `cache/` and takes tens of minutes; later runs read the cache and take a few
-minutes. The polarity queries and the LDA fit are the slowest remaining steps.
+minutes.
 
 ## Data schema
 
-Three tables, defined in `scripts/db.py`. Each carries a surrogate `id` primary key
-with the natural key as a UNIQUE constraint — which is what lets the loader's
-`INSERT IGNORE` de-duplicate on re-runs.
+Three tables, defined in `scripts/db.py`. 
 
 **`youtube_channels`** — one row per channel.
 
@@ -131,8 +120,7 @@ with the natural key as a UNIQUE constraint — which is what lets the loader's
 ## Parameters
 
 All of these live in `scripts/config.py`. The values below are the ones the paper
-reports. They are read when a function is *called*, so overriding one in the
-notebook takes effect on the next cell without reimporting.
+reports. 
 
 | Parameter | Value | Meaning |
 |---|---|---|
@@ -197,7 +185,7 @@ of Communities in Dynamic Social Networks* (ASONAM '10):
    merge, split, continuation. An unmatched community is not declared dead
    immediately — it stays eligible for `GRACE` snapshots, so a faction that goes
    quiet for a few weeks and returns is tracked as one community rather than two.
-   
+
 
 ## Citation
 
