@@ -27,11 +27,6 @@ mapping_political_factions/
     └── run_all_figures.py   # regenerate everything headless
 ```
 
-There is no separate `figures/` tree: a figure's plotting code sits directly in
-the module that computes its inputs (`cohesion.py` has both `cohesion_tables()`
-and `plot_wing_cohesion()`, and so on), so a result and the code that draws it
-are never more than a scroll apart.
-
 ## Setup
 
 **1. Dependencies** (Python 3.11 or newer):
@@ -132,17 +127,6 @@ with the natural key as a UNIQUE constraint — which is what lets the loader's
 | `published_at`, `updated_at` | DATETIME | Timestamps |
 | `like_count` | INT | Likes at collection time |
 
-`author_name` is only ever used to group and count: the analysis needs a stable
-identifier per commenter, not a real handle, so a released bundle can substitute
-a per-dataset hash without changing any result. `comment_text` is never read by
-this package and can be omitted from a bundle entirely.
-
-The indexes are load-bearing rather than cosmetic. Every analysis query filters
-`channel_id IN (...) AND published_at BETWEEN ...`, and the polarity queries
-additionally `GROUP BY author_name` over tens of millions of rows — which is why
-the comment index is the three-column `(channel_id, published_at, author_name)`
-rather than two separate ones: it covers those queries outright. Without it they
-fall back to full table scans.
 
 ## Parameters
 
@@ -174,7 +158,7 @@ Two of these deserve a note.
 
 `POLARITY_DC_PAIRS` identifies specific factions, so the ids are only meaningful
 under the parameters above. If a replication changes any of them, the ids will
-not line up; `polarity.resolve_dc_pairs()` detects that, says so, and falls back
+not line up; `polarity.resolve_dc_pairs()` detects that, and falls back
 to the longest-lived same-wing pair per wing.
 
 `TOP_DC_SELECTION` controls which communities the per-community panels show.
